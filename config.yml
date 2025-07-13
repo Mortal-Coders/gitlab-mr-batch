@@ -1,0 +1,3 @@
+gitlab:
+  host: https://gitlab.domain.com/
+  token: your-api-key
