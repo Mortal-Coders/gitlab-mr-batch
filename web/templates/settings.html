@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced Namespace Viewer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+<div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">Namespaces</h2>
+  <hr class="border-gray-300 mb-4">
+  <ul>
+    {{range .Namespaces}}
+    <li class="mb-2">
+      <button
+              onclick="toggleSection('section-{{.Id}}')"
+              class="w-full text-left bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition flex justify-between items-center"
+      >
+        <span>{{.Name}}</span>
+        <svg
+                id="icon-{{.Id}}"
+                class="w-5 h-5 transform transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <div id="section-{{.Id}}" class="hidden mt-2 bg-gray-50 rounded-lg p-4">
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Users Section -->
+          <div>
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Users</h3>
+            <ul class="space-y-2">
+              {{$users := index $.Users .Id}}
+              {{if $users}}
+              {{range $users}}
+              <li class="flex items-center">
+                <input
+                        type="checkbox"
+                        value="{{.Username}}"
+                        class="h-4 w-4 text-blue-500 rounded border-gray-300 focus:ring-blue-500"
+                >
+                <span class="ml-2 text-gray-600">{{.Username}}</span>
+              </li>
+              {{end}}
+              {{else}}
+              <li class="text-gray-500">No users available</li>
+              {{end}}
+            </ul>
+          </div>
+          <!-- Projects Section -->
+          <div>
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Projects</h3>
+            <ul class="space-y-2">
+              {{$projects := index $.Projects .Id}}
+              {{if $projects}}
+              {{range $projects}}
+              <li class="flex items-center">
+                <input
+                        type="checkbox"
+                        value="{{.Name}}"
+                        class="h-4 w-4 text-blue-500 rounded border-gray-300 focus:ring-blue-500"
+                >
+                <span class="ml-2 text-gray-600">{{.Name}}</span>
+              </li>
+              {{end}}
+              {{else}}
+              <li class="text-gray-500">No projects available</li>
+              {{end}}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </li>
+    {{end}}
+  </ul>
+</div>
+
+<script>
+  function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const icon = document.getElementById(`icon-${sectionId.split('-')[1]}`);
+    section.classList.toggle('hidden');
+    icon.classList.toggle('rotate-180');
+  }
+</script>
+</body>
+</html>
