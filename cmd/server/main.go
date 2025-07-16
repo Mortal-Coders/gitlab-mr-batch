@@ -17,7 +17,7 @@ func main() {
 		log.Fatalf("Config load error: %v", err)
 	}
 
-	gitlabClient := gitlab.NewGitlabClient("http://localhost:8000", config.Gitlab.Token)
+	gitlabClient := gitlab.NewGitlabClient(config.Gitlab.Host, config.Gitlab.Token)
 
 	log.Println(config)
 
