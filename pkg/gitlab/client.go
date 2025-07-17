@@ -66,7 +66,7 @@ func (c *Client) ListNamespaces() ([]model.GitlabNamespace, error) {
 }
 
 func (c *Client) ListUsersInGroup(groupId int) ([]model.GitlabUser, error) {
-	request, err := http.NewRequest("GET", fmt.Sprintf("%s/v4/groups/%d/members", c.baseUrl, groupId), nil)
+	request, err := http.NewRequest("GET", fmt.Sprintf("%s/api/v4/groups/%d/members", c.baseUrl, groupId), nil)
 	//request, err := http.NewRequest("GET", fmt.Sprintf("%s/users.json", c.baseUrl), nil)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
@@ -91,7 +91,7 @@ func (c *Client) ListUsersInGroup(groupId int) ([]model.GitlabUser, error) {
 }
 
 func (c *Client) ListProjectsInGroup(groupId int) ([]model.GitlabProject, error) {
-	request, err := http.NewRequest("GET", fmt.Sprintf("%s/v4/groups/%d/projects", c.baseUrl, groupId), nil)
+	request, err := http.NewRequest("GET", fmt.Sprintf("%s/api/v4/groups/%d/projects?include_subgroups=true", c.baseUrl, groupId), nil)
 	//request, err := http.NewRequest("GET", fmt.Sprintf("%s/projects.json", c.baseUrl), nil)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
